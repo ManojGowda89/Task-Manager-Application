@@ -3,9 +3,10 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
+    "install": "cd server && npm install && cd ../client && npm install",
     "server": "nodemon index.js --prefix ./server",
     "client": "npm run dev --prefix ./client",
-    "dev": "concurrently \"npm run client\" \"npm run server\""
+    "dev": "npm install && concurrently \"npm run client\" \"npm run server\""
   },
   "keywords": [],
   "author": "",
