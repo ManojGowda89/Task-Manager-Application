@@ -57,14 +57,7 @@ function App() {
         </GuestRoute>
       ),
     },
-    // {
-    //   path: "/home",
-    //   element: (
-    //     <ProtectedRoute>
-    //       <Home />
-    //     </ProtectedRoute>
-    //   ),
-    // },
+
   ]);
 
   return <RouterProvider router={router} />;
