@@ -15,7 +15,7 @@ const Login = () => {
     try {
      const result=await Login(email,password)
      if(result){
-         navigate('/home');
+         navigate('/');
 
      }
     } catch (error) {
@@ -80,7 +80,7 @@ const Login = () => {
                 try {
                   const response = await GoogleAuth();
                   if (response) {
-                    navigate("/home"); // Redirect to home on successful login
+                    navigate("/"); // Redirect to home on successful login
                   }
                 } catch (error) {
                   console.error("Google login failed:", error.message);

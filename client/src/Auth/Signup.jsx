@@ -24,7 +24,7 @@ const Signup = () => {
     try {
  const result = await  Signup(form.email,form.password,form.name)
    if(result){
-    navigate('/home');
+    navigate('/');
 
 }
     } catch (error) {
@@ -119,7 +119,7 @@ const Signup = () => {
                 try {
                   const response = await GoogleAuth();
                   if (response) {
-                    navigate("/home"); // Redirect to home on successful login
+                    navigate("/"); // Redirect to home on successful login
                   }
                 } catch (error) {
                   console.error("Google login failed:", error.message);
