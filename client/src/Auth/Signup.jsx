@@ -5,6 +5,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { TextField, Button, Typography, Container, Box } from '@mui/material';
 import { Layout } from '../Layout/Layout.jsx';
 import { toast } from 'react-toastify';
+import GoogleIcon from '@mui/icons-material/Google';
 const Signup = () => {
     const [form, setForm] = useState({ name: '', email: '', password: '', confirmPassword: '' });
     const {Signup,GoogleAuth}= useFirestore()
@@ -127,7 +128,8 @@ const Signup = () => {
                 }
               }}
           >
-            Signup with Google
+            <GoogleIcon sx={{ marginRight: 1 }} /> {/* Adds the Google icon */}
+            <Typography variant="button" sx={{ fontWeight: 600 }}>Google</Typography> {/* Title: Google */}
           </Button>
         </Box>
       </Box>

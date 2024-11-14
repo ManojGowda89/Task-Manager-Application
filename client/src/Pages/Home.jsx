@@ -14,6 +14,7 @@ import {
     DialogTitle,
     DialogContent,
     DialogContentText,
+    Skeleton
 } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
@@ -26,14 +27,17 @@ export default function Home() {
     const [taskData, setTaskData] = useState({ title: '', description: '' });
     const [selectedTask, setSelectedTask] = useState(null);
     const [viewTask, setViewTask] = useState(null);
+    const [loading, setLoading] = useState(true); // Loading state
 
     const token = localStorage.getItem('token');
     const email = localStorage.getItem('email');
 
     useEffect(() => {
         async function fetchTasks() {
+            setLoading(true); // Set loading to true when fetching data
             const result = await getTasksByEmail(token, email);
             setTasks(result);
+            setLoading(false); // Set loading to false once data is fetched
         }
         fetchTasks();
     }, []);
@@ -189,56 +193,49 @@ export default function Home() {
                                 <Typography variant="h6" sx={{ marginBottom: 1, textAlign: 'center', color: '#1976d2' }}>
                                     {status.toUpperCase()}
                                 </Typography>
-                                {tasks.filter(task => task.status === status).map(task => (
-                                    <Paper
-                                        key={task._id}
-                                        sx={{
-                                            padding: 2,
-                                            marginBottom: 2,
-                                            cursor: 'pointer',
-                                            border: '1px solid #1976d2',
-                                            backgroundColor: getStatusCardColor(status),
-                                            boxShadow: '0px 2px 6px rgba(0, 0, 0, 0.2)',
-                                            borderRadius: 2,
-                                            transition: 'all 0.3s ease',
-                                            transform: 'scale(1)',
-                                            '&:hover': {
-                                                transform: 'scale(1.05)',
-                                                boxShadow: '0px 4px 12px rgba(0, 0, 0, 0.2)',
-                                            },
-                                        }}
-                                        draggable
-                                        onDragStart={(e) => handleDragStart(e, task._id)}
-                                        onClick={() => handleViewTask(task)} // Open view on card click
-                                    >
-                                        <Typography variant="subtitle1" sx={{ color: '#0d47a1' }}>{task.title}</Typography>
-                                        <Typography variant="body2" sx={{ color: '#01579b' }}>
-                                            {task.description.length > 20 ? `${task.description.slice(0, 20)}...` : task.description}
-                                        </Typography>
-                                        <Typography variant="caption" display="block" sx={{ marginTop: 1, color: '#0d47a1' }}>
-                                            Created at: {new Date(task.createdTime).toLocaleString()}
-                                        </Typography>
-                                        <Box sx={{ display: 'flex', justifyContent: 'flex-end', marginTop: 1 }}>
-                                            <IconButton color="error" onClick={(e) => { e.stopPropagation(); handleDeleteTask(task._id); }}>
-                                                <DeleteIcon />
-                                            </IconButton>
-                                            <IconButton color="primary" onClick={(e) => { 
-                                                e.stopPropagation(); 
-                                                setSelectedTask(task); 
-                                                setTaskData({ title: task.title, description: task.description }); 
-                                                openModal(); 
-                                            }}>
-                                                <EditIcon />
-                                            </IconButton>
-                                            <IconButton color="info" onClick={(e) => { 
-                                                e.stopPropagation(); 
-                                                handleViewTask(task); 
-                                            }}>
-                                                <VisibilityIcon />
-                                            </IconButton>
-                                        </Box>
-                                    </Paper>
-                                ))}
+                                {loading ? ( // Show skeleton loading while tasks are being fetched
+                                    <Skeleton variant="rectangular" width="100%" height={100} />
+                                ) : (
+                                    tasks.filter(task => task.status === status).map(task => (
+                                        <Paper
+                                            key={task._id}
+                                            sx={{
+                                                padding: 2,
+                                                marginBottom: 2,
+                                                cursor: 'pointer',
+                                                border: '1px solid #1976d2',
+                                                backgroundColor: getStatusCardColor(status),
+                                                boxShadow: '0px 2px 6px rgba(0, 0, 0, 0.2)',
+                                                borderRadius: 2,
+                                                transition: 'all 0.3s ease',
+                                                transform: 'scale(1)',
+                                                '&:hover': {
+                                                    transform: 'scale(1.05)',
+                                                    boxShadow: '0px 4px 12px rgba(0, 0, 0, 0.2)',
+                                                },
+                                            }}
+                                            draggable
+                                            onDragStart={(e) => handleDragStart(e, task._id)}
+                                            onClick={() => handleViewTask(task)} // Open view on card click
+                                        >
+                                            <Typography variant="subtitle1" sx={{ color: '#0d47a1' }}>{task.title}</Typography>
+                                            <Typography variant="body2" sx={{ color: '#01579b' }}>
+                                                {task.description.length > 20 ? `${task.description.slice(0, 20)}...` : task.description}
+                                            </Typography>
+                                            <Typography variant="caption" display="block" sx={{ marginTop: 1, color: '#0d47a1' }}>
+                                                Created at: {new Date(task.createdTime).toLocaleString()}
+                                            </Typography>
+                                            <Box sx={{ display: 'flex', justifyContent: 'flex-end', marginTop: 1 }}>
+                                                <IconButton color="error" onClick={(e) => { e.stopPropagation(); handleDeleteTask(task._id); }}>
+                                                    <DeleteIcon />
+                                                </IconButton>
+                                                <IconButton color="primary" onClick={(e) => { e.stopPropagation(); setSelectedTask(task); setTaskData({ title: task.title, description: task.description }); openModal(); }}>
+                                                    <EditIcon />
+                                                </IconButton>
+                                            </Box>
+                                        </Paper>
+                                    ))
+                                )}
                             </Paper>
                         </Grid>
                     ))}

@@ -4,7 +4,7 @@ import {useFirestore} from "../Store/FireStore.jsx"
 import { Link, useNavigate } from 'react-router-dom';
 import { TextField, Button, Typography, Container, Box } from '@mui/material';
 import { Layout } from '../Layout/Layout.jsx';
-
+import GoogleIcon from '@mui/icons-material/Google';
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -88,7 +88,8 @@ const Login = () => {
                 }
               }}
           >
-            Login with Google
+            <GoogleIcon sx={{ marginRight: 1 }} /> {/* Adds the Google icon */}
+            <Typography variant="button" sx={{ fontWeight: 600 }}>Google</Typography> {/* Title: Google */}
           </Button>
         </Box>
       </Box>

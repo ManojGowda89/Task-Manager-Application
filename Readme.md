@@ -3,6 +3,8 @@
 
 A full-stack task management application using React, Firebase for client-side state and authentication, and Express with MongoDB for server-side operations.
 
+**Live Website**: [https://task.manojgowda.in/](https://task.manojgowda.in/)
+
 ---
 
 ## Getting Started
@@ -84,3 +86,5 @@ The server is built with Express.js, using MongoDB as the database and `mb64-con
 - **Server**: Express, MongoDB (with `mb64-connect`), JWT for secure access, CORS for cross-origin handling
 
 ---
+
+With the live website link now added, users can directly access the application at [https://task.manojgowda.in/](https://task.manojgowda.in/).
