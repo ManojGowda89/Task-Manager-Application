@@ -1,4 +1,5 @@
-﻿
+
+ 
 # Task-Manager-Application
 
 A full-stack task management application using React, Firebase for client-side state and authentication, and Express with MongoDB for server-side operations.
